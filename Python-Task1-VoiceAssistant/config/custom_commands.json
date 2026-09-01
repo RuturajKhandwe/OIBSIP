@@ -1,0 +1,34 @@
+{
+  "commands": [
+    {
+      "name": "open youtube",
+      "phrases": [
+        "open youtube",
+        "launch youtube",
+        "go to youtube"
+      ],
+      "action_type": "open_url",
+      "action_value": "https://www.youtube.com"
+    },
+    {
+      "name": "open github",
+      "phrases": [
+        "open github",
+        "launch github",
+        "go to my github"
+      ],
+      "action_type": "open_url",
+      "action_value": "https://www.github.com"
+    },
+    {
+      "name": "who created you",
+      "phrases": [
+        "who created you",
+        "who made you",
+        "who is your developer"
+      ],
+      "action_type": "response",
+      "action_value": "I was developed as an intelligent Python voice assistant project."
+    }
+  ]
+}

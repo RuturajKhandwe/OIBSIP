@@ -1,0 +1,14 @@
+# Core Speech & Audio Dependencies
+SpeechRecognition>=3.10.0
+pyttsx3>=2.90
+PyAudio>=0.2.14
+
+# Configuration & Utilities
+python-dotenv>=1.0.0
+requests>=2.31.0
+
+# Natural Language Understanding (Lightweight Vector-Space NLP)
+scikit-learn>=1.3.0
+
+# Testing & Quality Assurance
+pytest>=7.4.0

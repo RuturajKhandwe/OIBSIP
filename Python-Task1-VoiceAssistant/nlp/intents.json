@@ -1,0 +1,188 @@
+{
+  "intents": [
+    {
+      "intent": "greeting",
+      "patterns": [
+        "hello",
+        "hi",
+        "hey",
+        "hey there",
+        "good morning",
+        "good afternoon",
+        "good evening",
+        "howdy",
+        "greetings",
+        "hello assistant",
+        "hello nova",
+        "hey assistant",
+        "hello there"
+      ]
+    },
+    {
+      "intent": "get_time",
+      "patterns": [
+        "what time is it",
+        "tell me the time",
+        "what's the current time",
+        "can you tell me the time",
+        "could you tell me the current time",
+        "do you know what time it is",
+        "what is the time right now",
+        "current time please",
+        "do you have the time",
+        "tell me current time"
+      ]
+    },
+    {
+      "intent": "get_date",
+      "patterns": [
+        "what is today's date",
+        "what's the date",
+        "tell me today's date",
+        "what day is it",
+        "what date is it",
+        "what day is today",
+        "tell me the date",
+        "what day is it today",
+        "could you tell me today's date",
+        "what is the date today",
+        "today's date please",
+        "what's today's date"
+      ]
+    },
+    {
+      "intent": "web_search",
+      "patterns": [
+        "search for Python tutorials",
+        "search Python machine learning tutorials",
+        "look up Python tutorials online",
+        "can you search the web for Python tutorials",
+        "google search machine learning",
+        "search online for quantum computing",
+        "search the web for climate news",
+        "search for Python decorators",
+        "look up artificial intelligence",
+        "google artificial intelligence",
+        "search machine learning",
+        "look up weather in Pune",
+        "search for machine learning basics",
+        "search the web for FastAPI",
+        "search the web for FastAPI documentation",
+        "find information about computer vision",
+        "find information about neural networks",
+        "find information about machine learning",
+        "google neural networks",
+        "look for Python pandas documentation",
+        "google Python pandas tutorial",
+        "look up FastAPI documentation"
+      ]
+    },
+    {
+      "intent": "get_weather",
+      "patterns": [
+        "what's the weather in Pune",
+        "what is the weather in Pune",
+        "tell me the weather in Mumbai",
+        "how hot is it in Delhi",
+        "what is the temperature in Nagpur",
+        "is it raining in Pune",
+        "what's the weather",
+        "what is the weather",
+        "how's the weather",
+        "what is the weather like",
+        "will it rain in Pune",
+        "temperature in Mumbai",
+        "tell me the weather in Delhi",
+        "tell me the weather",
+        "weather in Pune",
+        "what's the weather in Mumbai",
+        "temperature in Delhi",
+        "how hot is it in Pune",
+        "is it raining in Mumbai",
+        "tell me today's weather",
+        "weather forecast for Pune",
+        "how is the weather today",
+        "tell me the weather forecast for Mumbai",
+        "is it raining outside in Delhi",
+        "what is the temperature in London",
+        "weather report"
+      ]
+    },
+    {
+      "intent": "knowledge_query",
+      "patterns": [
+        "what is Python",
+        "explain Python",
+        "tell me about Python",
+        "what is machine learning",
+        "explain artificial intelligence",
+        "who was Albert Einstein",
+        "who is Albert Einstein",
+        "who was Alan Turing",
+        "what is a neural network",
+        "explain deep learning",
+        "tell me about computer vision",
+        "what is artificial intelligence",
+        "explain neural networks",
+        "what is deep learning",
+        "who was Isaac Newton",
+        "tell me about quantum computing"
+      ]
+    },
+    {
+      "intent": "send_email",
+      "patterns": [
+        "send an email",
+        "send an email to John",
+        "send an email to Rahul",
+        "email John",
+        "email Rahul",
+        "send a message to John",
+        "send an email to john@example.com",
+        "email this person",
+        "send an email saying hello",
+        "send an email to Rahul saying I'll call you later",
+        "email Rahul and tell him the meeting is at 5",
+        "send email to test@example.com saying meeting is at 5 PM",
+        "email john regarding project updates",
+        "compose a message to email",
+        "send email to client",
+        "write an email"
+      ]
+    },
+    {
+      "intent": "set_reminder",
+      "patterns": [
+        "remind me in 5 minutes",
+        "set a reminder for 10 minutes",
+        "set a reminder for one hour",
+        "remind me to call Rahul in 20 minutes",
+        "remind me in an hour",
+        "set a reminder",
+        "remind me to drink water in 30 minutes",
+        "remind me to check my email in 1 hour",
+        "remind me in 10 seconds",
+        "remind me in 30 seconds",
+        "remind me in 10 minutes",
+        "set a timer for 5 minutes",
+        "create a reminder to take medicine",
+        "remind me to call mom in 1 hour"
+      ]
+    },
+    {
+      "intent": "exit",
+      "patterns": [
+        "exit",
+        "quit",
+        "stop",
+        "goodbye",
+        "close assistant",
+        "close the assistant",
+        "stop assistant",
+        "bye",
+        "shutdown",
+        "turn off assistant"
+      ]
+    }
+  ]
+}

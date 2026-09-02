@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatFlow - Real-Time Workspace</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Socket.IO Client CDN -->
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+</head>
+<body class="chat-app-page">
+    <div class="chat-app-container">
+        
+        <!-- Header Bar (64px) -->
+        <header class="app-header">
+            <div class="header-left">
+                <button id="sidebarToggleBtn" class="icon-btn mobile-only" title="Toggle Sidebar">☰</button>
+                <div class="app-brand">
+                    <div class="app-brand-icon">💬</div>
+                    <span>ChatFlow</span>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div id="connectionBadge" class="status-badge status-disconnected">
+                    <span class="status-dot"></span>
+                    <span id="connectionText">Connecting...</span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="user-profile-pill">
+                    <span class="user-avatar-circle">{{ username[0]|upper }}</span>
+                    <span class="user-name-text" id="currentUsername">{{ username }}</span>
+                    <span class="user-status-dot" title="Online"></span>
+                </div>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary btn-sm" id="logoutBtn">Logout</a>
+            </div>
+        </header>
+
+        <!-- Desktop Notification Banner -->
+        <div id="notificationBanner" class="notification-banner hidden">
+            <span>Enable browser desktop notifications for incoming chat messages?</span>
+            <div style="display: flex; gap: 8px;">
+                <button id="enableNotificationsBtn" class="btn btn-primary btn-xs">Enable</button>
+                <button id="dismissNotificationsBtn" class="btn-text btn-xs">Dismiss</button>
+            </div>
+        </div>
+
+        <!-- Main Workspace Body -->
+        <div class="chat-body">
+            
+            <!-- Left Sidebar (Rooms & Navigation) -->
+            <aside class="chat-sidebar" id="chatSidebar">
+                <div class="sidebar-header">
+                    <span class="sidebar-title">Chat Rooms</span>
+                    <button id="openCreateRoomBtn" class="icon-btn-sm" title="Create Room">+</button>
+                </div>
+
+                <!-- Room Search Field -->
+                <div class="sidebar-search">
+                    <div class="search-input-wrapper">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="roomSearchInput" class="search-input" placeholder="Search conversations...">
+                    </div>
+                </div>
+
+                <!-- Active Rooms List -->
+                <div class="room-list" id="roomList">
+                    <div class="room-item-placeholder">Loading rooms...</div>
+                </div>
+
+                <!-- Create Room Inline Card -->
+                <div id="createRoomModal" class="create-room-card hidden">
+                    <h4>Create New Room</h4>
+                    <form id="createRoomForm">
+                        <input type="text" id="newRoomNameInput" class="form-input form-input-sm" placeholder="Room name (3-30 chars)" required>
+                        <div class="card-actions">
+                            <button type="submit" class="btn btn-primary btn-xs">Create</button>
+                            <button type="button" id="cancelCreateRoomBtn" class="btn btn-secondary btn-xs">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </aside>
+
+            <!-- Main Conversation Area -->
+            <main class="chat-main">
+                
+                <!-- Conversation Header -->
+                <div class="room-header">
+                    <div class="room-info">
+                        <h2 id="currentRoomTitle"># General</h2>
+                        <span id="roomOnlineBadge" class="room-subtitle">0 active members</span>
+                    </div>
+                    <div class="room-actions">
+                        <button id="togglePresenceBtn" class="btn btn-secondary btn-xs" title="Toggle Online Users">
+                            👥 Active Users (<span id="presenceCountText">0</span>)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Online Presence Roster Drawer -->
+                <div id="presenceDrawer" class="presence-drawer hidden">
+                    <div class="presence-header">Online in this room</div>
+                    <ul id="presenceList" class="presence-list">
+                        <!-- Populated dynamically -->
+                    </ul>
+                </div>
+
+                <!-- Message Log Display -->
+                <div class="messages-container" id="messagesContainer">
+                    <div class="messages-empty" id="messagesEmpty">
+                        <div class="empty-icon">💬</div>
+                        <p style="font-weight: 600; font-size: 1rem; color: var(--text-primary); margin-bottom: 4px;">Welcome to the conversation!</p>
+                        <p>Send a message below to start chatting in real time.</p>
+                    </div>
+                    <div class="messages-feed" id="messagesFeed"></div>
+                </div>
+
+                <!-- Message Composer -->
+                <footer class="chat-input-bar">
+                    <!-- Quick Emoji Bar -->
+                    <div class="emoji-bar">
+                        <button type="button" class="emoji-btn" data-emoji=":)">🙂</button>
+                        <button type="button" class="emoji-btn" data-emoji="😍">😍</button>
+                        <button type="button" class="emoji-btn" data-emoji="😂">😂</button>
+                        <button type="button" class="emoji-btn" data-emoji=":heart:">❤️</button>
+                        <button type="button" class="emoji-btn" data-emoji=":fire:">🔥</button>
+                        <button type="button" class="emoji-btn" data-emoji=":thumbsup:">👍</button>
+                        <button type="button" class="emoji-btn" data-emoji=":rocket:">🚀</button>
+                        <button type="button" class="emoji-btn" data-emoji=":100:">💯</button>
+                        <button type="button" class="emoji-btn" data-emoji=":party:">🎉</button>
+                    </div>
+
+                    <form id="messageForm" class="message-form">
+                        <input type="text" id="messageInput" class="message-input" placeholder="Type a message..." autocomplete="off" required>
+                        <button type="submit" class="btn btn-primary send-btn" id="sendBtn" title="Send message">
+                            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                        </button>
+                    </form>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <!-- Alert / Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
